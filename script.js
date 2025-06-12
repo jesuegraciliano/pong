@@ -184,4 +184,15 @@ playButton.addEventListener('click', () => {
     console.log('Erro ao tentar tocar música:', err);
   });
 });
+const playButton = document.getElementById('play-music-button');
+const music = document.getElementById('bg-music');
+
+playButton.addEventListener('click', () => {
+  music.volume = 0.2;
+  music.play().then(() => {
+    playButton.style.display = 'none';
+  }).catch(err => {
+    console.warn("O navegador bloqueou o áudio até uma interação real do usuário:", err);
+  });
+});
 
