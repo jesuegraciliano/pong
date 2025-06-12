@@ -47,10 +47,19 @@ document.addEventListener('keyup', (event) => {
 const btnUp = document.getElementById('btn-up');
 const btnDown = document.getElementById('btn-down');
 
+// Botão subir
 btnUp.addEventListener('touchstart', () => upArrowPressed = true);
 btnUp.addEventListener('touchend', () => upArrowPressed = false);
+btnUp.addEventListener('mousedown', () => upArrowPressed = true);
+btnUp.addEventListener('mouseup', () => upArrowPressed = false);
+btnUp.addEventListener('mouseleave', () => upArrowPressed = false);
+
+// Botão descer
 btnDown.addEventListener('touchstart', () => downArrowPressed = true);
 btnDown.addEventListener('touchend', () => downArrowPressed = false);
+btnDown.addEventListener('mousedown', () => downArrowPressed = true);
+btnDown.addEventListener('mouseup', () => downArrowPressed = false);
+btnDown.addEventListener('mouseleave', () => downArrowPressed = false);
 
 function drawPaddle(x, y, width, height, color) {
   context.fillStyle = color;
