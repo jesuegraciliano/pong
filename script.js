@@ -33,19 +33,24 @@ const paddleSpeed = 10;
 let upArrowPressed = false;
 let downArrowPressed = false;
 
+// Teclado
 document.addEventListener('keydown', (event) => {
-  switch(event.key) {
-    case 'ArrowUp': upArrowPressed = true; break;
-    case 'ArrowDown': downArrowPressed = true; break;
-  }
+  if (event.key === 'ArrowUp') upArrowPressed = true;
+  if (event.key === 'ArrowDown') downArrowPressed = true;
+});
+document.addEventListener('keyup', (event) => {
+  if (event.key === 'ArrowUp') upArrowPressed = false;
+  if (event.key === 'ArrowDown') downArrowPressed = false;
 });
 
-document.addEventListener('keyup', (event) => {
-  switch(event.key) {
-    case 'ArrowUp': upArrowPressed = false; break;
-    case 'ArrowDown': downArrowPressed = false; break;
-  }
-});
+// Botões de toque (celular)
+const btnUp = document.getElementById('btn-up');
+const btnDown = document.getElementById('btn-down');
+
+btnUp.addEventListener('touchstart', () => upArrowPressed = true);
+btnUp.addEventListener('touchend', () => upArrowPressed = false);
+btnDown.addEventListener('touchstart', () => downArrowPressed = true);
+btnDown.addEventListener('touchend', () => downArrowPressed = false);
 
 function drawPaddle(x, y, width, height, color) {
   context.fillStyle = color;
@@ -81,7 +86,7 @@ function movePaddles() {
   if (upArrowPressed && paddle2.y > 0) paddle2.y -= paddleSpeed;
   if (downArrowPressed && paddle2.y < canvas.height - paddle2.height) paddle2.y += paddleSpeed;
 
-  // IA (esquerda) segue a bola com suavidade
+  // IA (esquerda)
   let targetY = ball.y - paddle1.height / 2;
   paddle1.y += (targetY - paddle1.y) * 0.08;
 }
