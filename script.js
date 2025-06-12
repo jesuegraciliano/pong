@@ -30,15 +30,11 @@ let paddle2 = {
 };
 
 const paddleSpeed = 10;
-let wPressed = false;
-let sPressed = false;
 let upArrowPressed = false;
 let downArrowPressed = false;
 
 document.addEventListener('keydown', (event) => {
   switch(event.key) {
-    case 'w': wPressed = true; break;
-    case 's': sPressed = true; break;
     case 'ArrowUp': upArrowPressed = true; break;
     case 'ArrowDown': downArrowPressed = true; break;
   }
@@ -46,8 +42,6 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (event) => {
   switch(event.key) {
-    case 'w': wPressed = false; break;
-    case 's': sPressed = false; break;
     case 'ArrowUp': upArrowPressed = false; break;
     case 'ArrowDown': downArrowPressed = false; break;
   }
@@ -67,7 +61,7 @@ function drawBall(x, y, radius, color) {
 }
 
 function drawScore(player1, player2) {
-  context.fillStyle = 'WHITE';
+  context.fillStyle = 'BLACK';
   context.font = '35px Arial';
   context.fillText(player1, canvas.width / 4, 50);
   context.fillText(player2, 3 * canvas.width / 4, 50);
@@ -78,15 +72,18 @@ function drawCenterLine() {
   context.setLineDash([5, 5]);
   context.moveTo(canvas.width / 2, 0);
   context.lineTo(canvas.width / 2, canvas.height);
-  context.strokeStyle = 'WHITE';
+  context.strokeStyle = 'BLACK';
   context.stroke();
 }
 
 function movePaddles() {
-  if (wPressed && paddle1.y > 0) paddle1.y -= paddleSpeed;
-  if (sPressed && paddle1.y < canvas.height - paddle1.height) paddle1.y += paddleSpeed;
+  // Jogador (direita)
   if (upArrowPressed && paddle2.y > 0) paddle2.y -= paddleSpeed;
   if (downArrowPressed && paddle2.y < canvas.height - paddle2.height) paddle2.y += paddleSpeed;
+
+  // IA (esquerda) segue a bola com suavidade
+  let targetY = ball.y - paddle1.height / 2;
+  paddle1.y += (targetY - paddle1.y) * 0.08;
 }
 
 function resetBall() {
