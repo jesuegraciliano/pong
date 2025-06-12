@@ -157,4 +157,20 @@ function gameLoop() {
   update();
   render();
 }
+window.addEventListener('click', startMusicOnce);
+window.addEventListener('touchstart', startMusicOnce);
+window.addEventListener('keydown', startMusicOnce);
+
+function startMusicOnce() {
+  const music = document.getElementById('bg-music');
+  if (music && music.paused) {
+    music.volume = 0.2;
+    music.play().catch((e) => console.log("Autoplay bloqueado:", e));
+  }
+
+  // Remover os listeners depois de tocar a música
+  window.removeEventListener('click', startMusicOnce);
+  window.removeEventListener('touchstart', startMusicOnce);
+  window.removeEventListener('keydown', startMusicOnce);
+}
 
