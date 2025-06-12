@@ -1,15 +1,26 @@
 const canvas = document.getElementById('pong');
 const context = canvas.getContext('2d');
 
-let ball = {
-  x : canvas.width / 2,
-  y : canvas.height / 2,
-  radius : 10,
-  velocityX : 5,
-  velocityY : 5,
-  speed : 7,
-  color : 'WHITE'
-};
+let balls = [
+  {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 10,
+    velocityX: 5,
+    velocityY: 5,
+    speed: 7,
+    color: 'WHITE'
+  },
+  {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 10,
+    velocityX: -5,
+    velocityY: -4,
+    speed: 7,
+    color: 'RED'
+  }
+];
 
 let paddle1 = {
   x : 0,
@@ -43,23 +54,21 @@ document.addEventListener('keyup', (event) => {
   if (event.key === 'ArrowDown') downArrowPressed = false;
 });
 
-// Botões de toque (celular)
+// Botões na tela (mouse + toque)
 const btnUp = document.getElementById('btn-up');
 const btnDown = document.getElementById('btn-down');
 
-// Botão subir
-btnUp.addEventListener('touchstart', () => upArrowPressed = true);
-btnUp.addEventListener('touchend', () => upArrowPressed = false);
-btnUp.addEventListener('mousedown', () => upArrowPressed = true);
-btnUp.addEventListener('mouseup', () => upArrowPressed = false);
+// UP
+btnUp.addEventListener('pointerdown', () => upArrowPressed = true);
+btnUp.addEventListener('pointerup', () => upArrowPressed = false);
 btnUp.addEventListener('mouseleave', () => upArrowPressed = false);
+btnUp.addEventListener('pointercancel', () => upArrowPressed = false);
 
-// Botão descer
-btnDown.addEventListener('touchstart', () => downArrowPressed = true);
-btnDown.addEventListener('touchend', () => downArrowPressed = false);
-btnDown.addEventListener('mousedown', () => downArrowPressed = true);
-btnDown.addEventListener('mouseup', () => downArrowPressed = false);
+// DOWN
+btnDown.addEventListener('pointerdown', () => downArrowPressed = true);
+btnDown.addEventListener('pointerup', () => downArrowPressed = false);
 btnDown.addEventListener('mouseleave', () => downArrowPressed = false);
+btnDown.addEventListener('pointercancel', () => downArrowPressed = false);
 
 function drawPaddle(x, y, width, height, color) {
   context.fillStyle = color;
@@ -96,11 +105,11 @@ function movePaddles() {
   if (downArrowPressed && paddle2.y < canvas.height - paddle2.height) paddle2.y += paddleSpeed;
 
   // IA (esquerda)
-  let targetY = ball.y - paddle1.height / 2;
+  let targetY = balls[0].y - paddle1.height / 2;
   paddle1.y += (targetY - paddle1.y) * 0.08;
 }
 
-function resetBall() {
+function resetBall(ball) {
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
   ball.velocityX = -ball.velocityX;
@@ -108,29 +117,31 @@ function resetBall() {
 }
 
 function update() {
-  ball.x += ball.velocityX;
-  ball.y += ball.velocityY;
+  balls.forEach(ball => {
+    ball.x += ball.velocityX;
+    ball.y += ball.velocityY;
 
-  if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0)
-    ball.velocityY = -ball.velocityY;
+    if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0)
+      ball.velocityY = -ball.velocityY;
 
-  if (ball.x - ball.radius < 0) {
-    paddle2.score++;
-    resetBall();
-  } else if (ball.x + ball.radius > canvas.width) {
-    paddle1.score++;
-    resetBall();
-  }
+    if (ball.x - ball.radius < 0) {
+      paddle2.score++;
+      resetBall(ball);
+    } else if (ball.x + ball.radius > canvas.width) {
+      paddle1.score++;
+      resetBall(ball);
+    }
 
-  if (ball.x - ball.radius < paddle1.x + paddle1.width &&
-      ball.y > paddle1.y &&
-      ball.y < paddle1.y + paddle1.height)
-    ball.velocityX = -ball.velocityX;
+    if (ball.x - ball.radius < paddle1.x + paddle1.width &&
+        ball.y > paddle1.y &&
+        ball.y < paddle1.y + paddle1.height)
+      ball.velocityX = -ball.velocityX;
 
-  if (ball.x + ball.radius > paddle2.x &&
-      ball.y > paddle2.y &&
-      ball.y < paddle2.y + paddle2.height)
-    ball.velocityX = -ball.velocityX;
+    if (ball.x + ball.radius > paddle2.x &&
+        ball.y > paddle2.y &&
+        ball.y < paddle2.y + paddle2.height)
+      ball.velocityX = -ball.velocityX;
+  });
 
   movePaddles();
 }
@@ -139,7 +150,7 @@ function render() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   drawPaddle(paddle1.x, paddle1.y, paddle1.width, paddle1.height, paddle1.color);
   drawPaddle(paddle2.x, paddle2.y, paddle2.width, paddle2.height, paddle2.color);
-  drawBall(ball.x, ball.y, ball.radius, ball.color);
+  balls.forEach(ball => drawBall(ball.x, ball.y, ball.radius, ball.color));
   drawScore(paddle1.score, paddle2.score);
   drawCenterLine();
 }
