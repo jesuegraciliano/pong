@@ -44,3 +44,9 @@ body {
 #touch-controls button:active {
   background-color: lightgray;
 }
+#pong {
+  border: 2px solid blue;
+  background: lightgreen;
+  max-width: 100%;
+  height: auto;
+}
