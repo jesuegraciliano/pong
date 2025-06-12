@@ -21,15 +21,15 @@ body {
   margin-bottom: 10px;
 }
 
-/* Botões de controle por toque */
+/* Controles de toque */
 #touch-controls {
-  margin-top: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   position: fixed;
   right: 20px;
   bottom: 40px;
+  z-index: 10;
 }
 
 #touch-controls button {
@@ -40,12 +40,14 @@ body {
   border: 2px solid black;
   border-radius: 10px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 #touch-controls button:active {
   background-color: lightgray;
 }
+
+/* Botão da música */
 #play-music-button {
   position: fixed;
   left: 20px;
@@ -62,4 +64,3 @@ body {
 #play-music-button:active {
   background-color: lightgray;
 }
-
