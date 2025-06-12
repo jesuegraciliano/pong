@@ -4,7 +4,7 @@ const context = canvas.getContext('2d');
 let balls = [
   {
     x: canvas.width / 2,
-    y: canvas.height / 2,
+    y: canvas.height / 2 - 30,
     radius: 10,
     velocityX: 5,
     velocityY: 5,
@@ -13,7 +13,7 @@ let balls = [
   },
   {
     x: canvas.width / 2,
-    y: canvas.height / 2,
+    y: canvas.height / 2 + 30,
     radius: 10,
     velocityX: -5,
     velocityY: -4,
@@ -58,13 +58,11 @@ document.addEventListener('keyup', (event) => {
 const btnUp = document.getElementById('btn-up');
 const btnDown = document.getElementById('btn-down');
 
-// UP
 btnUp.addEventListener('pointerdown', () => upArrowPressed = true);
 btnUp.addEventListener('pointerup', () => upArrowPressed = false);
 btnUp.addEventListener('mouseleave', () => upArrowPressed = false);
 btnUp.addEventListener('pointercancel', () => upArrowPressed = false);
 
-// DOWN
 btnDown.addEventListener('pointerdown', () => downArrowPressed = true);
 btnDown.addEventListener('pointerup', () => downArrowPressed = false);
 btnDown.addEventListener('mouseleave', () => downArrowPressed = false);
@@ -104,7 +102,7 @@ function movePaddles() {
   if (upArrowPressed && paddle2.y > 0) paddle2.y -= paddleSpeed;
   if (downArrowPressed && paddle2.y < canvas.height - paddle2.height) paddle2.y += paddleSpeed;
 
-  // IA (esquerda)
+  // IA (esquerda) segue a primeira bola
   let targetY = balls[0].y - paddle1.height / 2;
   paddle1.y += (targetY - paddle1.y) * 0.08;
 }
