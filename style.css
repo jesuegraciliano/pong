@@ -11,6 +11,8 @@ body {
 #pong {
   border: 2px solid blue;
   background: lightgreen;
+  max-width: 100%;
+  height: auto;
 }
 
 .title {
@@ -19,7 +21,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* Estilo dos botões de controle */
+/* Botões de controle por toque */
 #touch-controls {
   margin-top: 15px;
   display: flex;
@@ -43,10 +45,4 @@ body {
 
 #touch-controls button:active {
   background-color: lightgray;
-}
-#pong {
-  border: 2px solid blue;
-  background: lightgreen;
-  max-width: 100%;
-  height: auto;
 }
