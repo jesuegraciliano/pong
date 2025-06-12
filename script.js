@@ -158,9 +158,3 @@ function gameLoop() {
   render();
 }
 
-setInterval(gameLoop, 1000 / 50);
-window.onload = () => {
-  const music = document.getElementById('bg-music');
-  music.volume = 0.2; // volume de 0.0 a 1.0
-};
-
