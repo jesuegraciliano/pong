@@ -173,4 +173,15 @@ function startMusicOnce() {
   window.removeEventListener('touchstart', startMusicOnce);
   window.removeEventListener('keydown', startMusicOnce);
 }
+const playButton = document.getElementById('play-music-button');
+const music = document.getElementById('bg-music');
+
+playButton.addEventListener('click', () => {
+  music.volume = 0.2;
+  music.play().then(() => {
+    playButton.style.display = 'none'; // Esconde o botão após tocar
+  }).catch(err => {
+    console.log('Erro ao tentar tocar música:', err);
+  });
+});
 
