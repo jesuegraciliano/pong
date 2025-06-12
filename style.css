@@ -1,0 +1,25 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: black;
+  flex-direction: column;
+}
+
+#pong {
+  border: 2px solid blue;
+  height: 400px;
+  width: 800px;
+  position: relative;
+  background: black;
+}
+
+.title {
+  position: relative;
+  top: 10px;
+  color: white;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
